@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="faculdadeModelStoreContainer" CdmEntityContainer="faculdadeEntities">
+    <EntitySetMapping Name="auditoria_operacao">
+      <EntityTypeMapping TypeName="faculdadeModel.auditoria_operacao">
+        <MappingFragment StoreEntitySet="auditoria_operacao">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="login_usuario" ColumnName="login_usuario" />
+          <ScalarProperty Name="operacao" ColumnName="operacao" />
+          <ScalarProperty Name="data_operacao" ColumnName="data_operacao" />
+          <ScalarProperty Name="valor_antigo" ColumnName="valor_antigo" />
+          <ScalarProperty Name="valor_novo" ColumnName="valor_novo" />
+          <ScalarProperty Name="id_registro_alterado" ColumnName="id_registro_alterado" />
+          <ScalarProperty Name="nome_registro_alterado" ColumnName="nome_registro_alterado" />
+          <ScalarProperty Name="coluna_alterada" ColumnName="coluna_alterada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="curso">
+      <EntityTypeMapping TypeName="faculdadeModel.curso">
+        <MappingFragment StoreEntitySet="curso">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="grau" ColumnName="grau" />
+          <ScalarProperty Name="codigo_MEC" ColumnName="codigo_MEC" />
+          <ScalarProperty Name="autorização_DOU" ColumnName="autorização_DOU" />
+          <ScalarProperty Name="data_autorizacao_DOU" ColumnName="data_autorizacao_DOU" />
+          <ScalarProperty Name="reconhecimento_DOU" ColumnName="reconhecimento_DOU" />
+          <ScalarProperty Name="data_reconhecimento_DOU" ColumnName="data_reconhecimento_DOU" />
+          <ScalarProperty Name="renovacao_DOU" ColumnName="renovacao_DOU" />
+          <ScalarProperty Name="data_renovacao_DOU" ColumnName="data_renovacao_DOU" />
+          <ScalarProperty Name="observação" ColumnName="observação" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="diploma">
+      <EntityTypeMapping TypeName="faculdadeModel.diploma">
+        <MappingFragment StoreEntitySet="diploma">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nome_aluno" ColumnName="nome_aluno" />
+          <ScalarProperty Name="cpf_aluno" ColumnName="cpf_aluno" />
+          <ScalarProperty Name="data_emissao" ColumnName="data_emissao" />
+          <ScalarProperty Name="validado" ColumnName="validado" />
+          <ScalarProperty Name="id_usuario_validacao" ColumnName="id_usuario_validacao" />
+          <ScalarProperty Name="id_instituicao" ColumnName="id_instituicao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="instituicao">
+      <EntityTypeMapping TypeName="faculdadeModel.instituicao">
+        <MappingFragment StoreEntitySet="instituicao">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="endereco" ColumnName="endereco" />
+          <ScalarProperty Name="cidade" ColumnName="cidade" />
+          <ScalarProperty Name="uf" ColumnName="uf" />
+          <ScalarProperty Name="credenciamento_mec" ColumnName="credenciamento_mec" />
+          <ScalarProperty Name="mantenedora" ColumnName="mantenedora" />
+          <ScalarProperty Name="principal" ColumnName="principal" />
+          <ScalarProperty Name="acesso_liberado" ColumnName="acesso_liberado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuario">
+      <EntityTypeMapping TypeName="faculdadeModel.usuario">
+        <MappingFragment StoreEntitySet="usuario">
+          <ScalarProperty Name="codigo_recupera_senha" ColumnName="codigo_recupera_senha" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="login" ColumnName="login" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="sobrenome" ColumnName="sobrenome" />
+          <ScalarProperty Name="cpf" ColumnName="cpf" />
+          <ScalarProperty Name="telefone" ColumnName="telefone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="senha" ColumnName="senha" />
+          <ScalarProperty Name="funcao" ColumnName="funcao" />
+          <ScalarProperty Name="ativo" ColumnName="ativo" />
+          <ScalarProperty Name="id_instituicao" ColumnName="id_instituicao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

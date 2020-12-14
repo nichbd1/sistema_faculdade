@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="faculdadeModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="auditoria_operacao">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="login_usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="operacao" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="data_operacao" Type="date" Nullable="false" />
+          <Property Name="valor_antigo" Type="varchar" MaxLength="300" />
+          <Property Name="valor_novo" Type="varchar" MaxLength="300" />
+          <Property Name="id_registro_alterado" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="nome_registro_alterado" Type="varchar" MaxLength="200" />
+          <Property Name="coluna_alterada" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="curso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="grau" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="codigo_MEC" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="autorização_DOU" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="data_autorizacao_DOU" Type="date" Nullable="false" />
+          <Property Name="reconhecimento_DOU" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="data_reconhecimento_DOU" Type="date" Nullable="false" />
+          <Property Name="renovacao_DOU" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="data_renovacao_DOU" Type="date" Nullable="false" />
+          <Property Name="observação" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="diploma">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="nome_aluno" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="cpf_aluno" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="data_emissao" Type="date" Nullable="false" />
+          <Property Name="validado" Type="bool" Nullable="false" />
+          <Property Name="id_usuario_validacao" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="id_instituicao" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="instituicao">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="endereco" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cidade" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="uf" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="credenciamento_mec" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="mantenedora" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="principal" Type="bool" Nullable="false" />
+          <Property Name="acesso_liberado" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sobrenome" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cpf" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="telefone" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="senha" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="funcao" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ativo" Type="bool" Nullable="false" />
+          <Property Name="id_instituicao" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="codigo_recupera_senha" Type="int" />
+        </EntityType>
+        <Association Name="diploma_ibfk_1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="diploma" Type="Self.diploma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="diploma">
+              <PropertyRef Name="id_usuario_validacao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="diploma_ibfk_2">
+          <End Role="instituicao" Type="Self.instituicao" Multiplicity="1" />
+          <End Role="diploma" Type="Self.diploma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="instituicao">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="diploma">
+              <PropertyRef Name="id_instituicao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usuario_ibfk_1">
+          <End Role="instituicao" Type="Self.instituicao" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="instituicao">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_instituicao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="faculdadeModelStoreContainer">
+          <EntitySet Name="auditoria_operacao" EntityType="Self.auditoria_operacao" Schema="faculdade" store:Type="Tables" />
+          <EntitySet Name="curso" EntityType="Self.curso" Schema="faculdade" store:Type="Tables" />
+          <EntitySet Name="diploma" EntityType="Self.diploma" Schema="faculdade" store:Type="Tables" />
+          <EntitySet Name="instituicao" EntityType="Self.instituicao" Schema="faculdade" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="faculdade" store:Type="Tables" />
+          <AssociationSet Name="diploma_ibfk_1" Association="Self.diploma_ibfk_1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="diploma" EntitySet="diploma" />
+          </AssociationSet>
+          <AssociationSet Name="diploma_ibfk_2" Association="Self.diploma_ibfk_2">
+            <End Role="instituicao" EntitySet="instituicao" />
+            <End Role="diploma" EntitySet="diploma" />
+          </AssociationSet>
+          <AssociationSet Name="usuario_ibfk_1" Association="Self.usuario_ibfk_1">
+            <End Role="instituicao" EntitySet="instituicao" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="faculdadeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="auditoria_operacao">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Nullable="false" />
+          <Property Name="login_usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="operacao" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_operacao" Type="DateTime" Nullable="false" />
+          <Property Name="valor_antigo" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="valor_novo" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="id_registro_alterado" Type="Decimal" />
+          <Property Name="nome_registro_alterado" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="coluna_alterada" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="curso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="grau" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codigo_MEC" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="autorização_DOU" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_autorizacao_DOU" Type="DateTime" Nullable="false" />
+          <Property Name="reconhecimento_DOU" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_reconhecimento_DOU" Type="DateTime" Nullable="false" />
+          <Property Name="renovacao_DOU" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_renovacao_DOU" Type="DateTime" Nullable="false" />
+          <Property Name="observação" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="diploma">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Nullable="false" />
+          <Property Name="nome_aluno" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cpf_aluno" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_emissao" Type="DateTime" Nullable="false" />
+          <Property Name="validado" Type="Boolean" Nullable="false" />
+          <Property Name="id_usuario_validacao" Type="Decimal" />
+          <Property Name="id_instituicao" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.diploma_ibfk_1" FromRole="diploma" ToRole="usuario" />
+          <NavigationProperty Name="instituicao" Relationship="Self.diploma_ibfk_2" FromRole="diploma" ToRole="instituicao" />
+        </EntityType>
+        <EntityType Name="instituicao">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="endereco" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cidade" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="uf" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="credenciamento_mec" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mantenedora" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="principal" Type="Boolean" Nullable="false" />
+          <Property Name="acesso_liberado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="diploma" Relationship="Self.diploma_ibfk_2" FromRole="instituicao" ToRole="diploma" />
+          <NavigationProperty Name="usuario" Relationship="Self.usuario_ibfk_1" FromRole="instituicao" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sobrenome" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cpf" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="senha" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="funcao" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ativo" Type="Boolean" Nullable="false" />
+          <Property Name="id_instituicao" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="diploma" Relationship="Self.diploma_ibfk_1" FromRole="usuario" ToRole="diploma" />
+          <NavigationProperty Name="instituicao" Relationship="Self.usuario_ibfk_1" FromRole="usuario" ToRole="instituicao" />
+          <Property Name="codigo_recupera_senha" Type="Int32" />
+        </EntityType>
+        <Association Name="diploma_ibfk_1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="diploma" Type="Self.diploma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="diploma">
+              <PropertyRef Name="id_usuario_validacao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="diploma_ibfk_2">
+          <End Role="instituicao" Type="Self.instituicao" Multiplicity="1" />
+          <End Role="diploma" Type="Self.diploma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="instituicao">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="diploma">
+              <PropertyRef Name="id_instituicao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usuario_ibfk_1">
+          <End Role="instituicao" Type="Self.instituicao" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="instituicao">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_instituicao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="faculdadeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="auditoria_operacao" EntityType="Self.auditoria_operacao" />
+          <EntitySet Name="curso" EntityType="Self.curso" />
+          <EntitySet Name="diploma" EntityType="Self.diploma" />
+          <EntitySet Name="instituicao" EntityType="Self.instituicao" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="diploma_ibfk_1" Association="Self.diploma_ibfk_1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="diploma" EntitySet="diploma" />
+          </AssociationSet>
+          <AssociationSet Name="diploma_ibfk_2" Association="Self.diploma_ibfk_2">
+            <End Role="instituicao" EntitySet="instituicao" />
+            <End Role="diploma" EntitySet="diploma" />
+          </AssociationSet>
+          <AssociationSet Name="usuario_ibfk_1" Association="Self.usuario_ibfk_1">
+            <End Role="instituicao" EntitySet="instituicao" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="faculdadeModelStoreContainer" CdmEntityContainer="faculdadeEntities">
+          <EntitySetMapping Name="auditoria_operacao">
+            <EntityTypeMapping TypeName="faculdadeModel.auditoria_operacao">
+              <MappingFragment StoreEntitySet="auditoria_operacao">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="login_usuario" ColumnName="login_usuario" />
+                <ScalarProperty Name="operacao" ColumnName="operacao" />
+                <ScalarProperty Name="data_operacao" ColumnName="data_operacao" />
+                <ScalarProperty Name="valor_antigo" ColumnName="valor_antigo" />
+                <ScalarProperty Name="valor_novo" ColumnName="valor_novo" />
+                <ScalarProperty Name="id_registro_alterado" ColumnName="id_registro_alterado" />
+                <ScalarProperty Name="nome_registro_alterado" ColumnName="nome_registro_alterado" />
+                <ScalarProperty Name="coluna_alterada" ColumnName="coluna_alterada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="curso">
+            <EntityTypeMapping TypeName="faculdadeModel.curso">
+              <MappingFragment StoreEntitySet="curso">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="grau" ColumnName="grau" />
+                <ScalarProperty Name="codigo_MEC" ColumnName="codigo_MEC" />
+                <ScalarProperty Name="autorização_DOU" ColumnName="autorização_DOU" />
+                <ScalarProperty Name="data_autorizacao_DOU" ColumnName="data_autorizacao_DOU" />
+                <ScalarProperty Name="reconhecimento_DOU" ColumnName="reconhecimento_DOU" />
+                <ScalarProperty Name="data_reconhecimento_DOU" ColumnName="data_reconhecimento_DOU" />
+                <ScalarProperty Name="renovacao_DOU" ColumnName="renovacao_DOU" />
+                <ScalarProperty Name="data_renovacao_DOU" ColumnName="data_renovacao_DOU" />
+                <ScalarProperty Name="observação" ColumnName="observação" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="diploma">
+            <EntityTypeMapping TypeName="faculdadeModel.diploma">
+              <MappingFragment StoreEntitySet="diploma">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nome_aluno" ColumnName="nome_aluno" />
+                <ScalarProperty Name="cpf_aluno" ColumnName="cpf_aluno" />
+                <ScalarProperty Name="data_emissao" ColumnName="data_emissao" />
+                <ScalarProperty Name="validado" ColumnName="validado" />
+                <ScalarProperty Name="id_usuario_validacao" ColumnName="id_usuario_validacao" />
+                <ScalarProperty Name="id_instituicao" ColumnName="id_instituicao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="instituicao">
+            <EntityTypeMapping TypeName="faculdadeModel.instituicao">
+              <MappingFragment StoreEntitySet="instituicao">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="endereco" ColumnName="endereco" />
+                <ScalarProperty Name="cidade" ColumnName="cidade" />
+                <ScalarProperty Name="uf" ColumnName="uf" />
+                <ScalarProperty Name="credenciamento_mec" ColumnName="credenciamento_mec" />
+                <ScalarProperty Name="mantenedora" ColumnName="mantenedora" />
+                <ScalarProperty Name="principal" ColumnName="principal" />
+                <ScalarProperty Name="acesso_liberado" ColumnName="acesso_liberado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="faculdadeModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="codigo_recupera_senha" ColumnName="codigo_recupera_senha" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="sobrenome" ColumnName="sobrenome" />
+                <ScalarProperty Name="cpf" ColumnName="cpf" />
+                <ScalarProperty Name="telefone" ColumnName="telefone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+                <ScalarProperty Name="funcao" ColumnName="funcao" />
+                <ScalarProperty Name="ativo" ColumnName="ativo" />
+                <ScalarProperty Name="id_instituicao" ColumnName="id_instituicao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

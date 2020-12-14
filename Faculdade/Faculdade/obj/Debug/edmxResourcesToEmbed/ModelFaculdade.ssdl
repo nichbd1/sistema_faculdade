@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="faculdadeModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="auditoria_operacao">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="login_usuario" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="operacao" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="data_operacao" Type="date" Nullable="false" />
+    <Property Name="valor_antigo" Type="varchar" MaxLength="300" />
+    <Property Name="valor_novo" Type="varchar" MaxLength="300" />
+    <Property Name="id_registro_alterado" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="nome_registro_alterado" Type="varchar" MaxLength="200" />
+    <Property Name="coluna_alterada" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="curso">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="grau" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="codigo_MEC" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="autorização_DOU" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="data_autorizacao_DOU" Type="date" Nullable="false" />
+    <Property Name="reconhecimento_DOU" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="data_reconhecimento_DOU" Type="date" Nullable="false" />
+    <Property Name="renovacao_DOU" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="data_renovacao_DOU" Type="date" Nullable="false" />
+    <Property Name="observação" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="diploma">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="nome_aluno" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="cpf_aluno" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="data_emissao" Type="date" Nullable="false" />
+    <Property Name="validado" Type="bool" Nullable="false" />
+    <Property Name="id_usuario_validacao" Type="decimal" Precision="10" Scale="0" />
+    <Property Name="id_instituicao" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="instituicao">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="endereco" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="cidade" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="uf" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="credenciamento_mec" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="mantenedora" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="principal" Type="bool" Nullable="false" />
+    <Property Name="acesso_liberado" Type="bool" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="sobrenome" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="cpf" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="telefone" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="senha" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="funcao" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="ativo" Type="bool" Nullable="false" />
+    <Property Name="id_instituicao" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="codigo_recupera_senha" Type="int" />
+  </EntityType>
+  <Association Name="diploma_ibfk_1">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+    <End Role="diploma" Type="Self.diploma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="diploma">
+        <PropertyRef Name="id_usuario_validacao" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="diploma_ibfk_2">
+    <End Role="instituicao" Type="Self.instituicao" Multiplicity="1" />
+    <End Role="diploma" Type="Self.diploma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="instituicao">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="diploma">
+        <PropertyRef Name="id_instituicao" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="usuario_ibfk_1">
+    <End Role="instituicao" Type="Self.instituicao" Multiplicity="1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="instituicao">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="id_instituicao" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="faculdadeModelStoreContainer">
+    <EntitySet Name="auditoria_operacao" EntityType="Self.auditoria_operacao" Schema="faculdade" store:Type="Tables" />
+    <EntitySet Name="curso" EntityType="Self.curso" Schema="faculdade" store:Type="Tables" />
+    <EntitySet Name="diploma" EntityType="Self.diploma" Schema="faculdade" store:Type="Tables" />
+    <EntitySet Name="instituicao" EntityType="Self.instituicao" Schema="faculdade" store:Type="Tables" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" Schema="faculdade" store:Type="Tables" />
+    <AssociationSet Name="diploma_ibfk_1" Association="Self.diploma_ibfk_1">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="diploma" EntitySet="diploma" />
+    </AssociationSet>
+    <AssociationSet Name="diploma_ibfk_2" Association="Self.diploma_ibfk_2">
+      <End Role="instituicao" EntitySet="instituicao" />
+      <End Role="diploma" EntitySet="diploma" />
+    </AssociationSet>
+    <AssociationSet Name="usuario_ibfk_1" Association="Self.usuario_ibfk_1">
+      <End Role="instituicao" EntitySet="instituicao" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

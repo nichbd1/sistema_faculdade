@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="faculdadeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="auditoria_operacao">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Decimal" Nullable="false" />
+    <Property Name="login_usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="operacao" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="data_operacao" Type="DateTime" Nullable="false" />
+    <Property Name="valor_antigo" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="valor_novo" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="id_registro_alterado" Type="Decimal" />
+    <Property Name="nome_registro_alterado" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="coluna_alterada" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="curso">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Decimal" Nullable="false" />
+    <Property Name="nome" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="grau" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="codigo_MEC" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="autorização_DOU" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="data_autorizacao_DOU" Type="DateTime" Nullable="false" />
+    <Property Name="reconhecimento_DOU" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="data_reconhecimento_DOU" Type="DateTime" Nullable="false" />
+    <Property Name="renovacao_DOU" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="data_renovacao_DOU" Type="DateTime" Nullable="false" />
+    <Property Name="observação" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="diploma">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Decimal" Nullable="false" />
+    <Property Name="nome_aluno" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="cpf_aluno" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="data_emissao" Type="DateTime" Nullable="false" />
+    <Property Name="validado" Type="Boolean" Nullable="false" />
+    <Property Name="id_usuario_validacao" Type="Decimal" />
+    <Property Name="id_instituicao" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="usuario" Relationship="Self.diploma_ibfk_1" FromRole="diploma" ToRole="usuario" />
+    <NavigationProperty Name="instituicao" Relationship="Self.diploma_ibfk_2" FromRole="diploma" ToRole="instituicao" />
+  </EntityType>
+  <EntityType Name="instituicao">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Decimal" Nullable="false" />
+    <Property Name="nome" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="endereco" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="cidade" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="uf" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="credenciamento_mec" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="mantenedora" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="principal" Type="Boolean" Nullable="false" />
+    <Property Name="acesso_liberado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="diploma" Relationship="Self.diploma_ibfk_2" FromRole="instituicao" ToRole="diploma" />
+    <NavigationProperty Name="usuario" Relationship="Self.usuario_ibfk_1" FromRole="instituicao" ToRole="usuario" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Decimal" Nullable="false" />
+    <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="sobrenome" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="cpf" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="telefone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="senha" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="funcao" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ativo" Type="Boolean" Nullable="false" />
+    <Property Name="id_instituicao" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="diploma" Relationship="Self.diploma_ibfk_1" FromRole="usuario" ToRole="diploma" />
+    <NavigationProperty Name="instituicao" Relationship="Self.usuario_ibfk_1" FromRole="usuario" ToRole="instituicao" />
+    <Property Name="codigo_recupera_senha" Type="Int32" />
+  </EntityType>
+  <Association Name="diploma_ibfk_1">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+    <End Role="diploma" Type="Self.diploma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="diploma">
+        <PropertyRef Name="id_usuario_validacao" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="diploma_ibfk_2">
+    <End Role="instituicao" Type="Self.instituicao" Multiplicity="1" />
+    <End Role="diploma" Type="Self.diploma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="instituicao">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="diploma">
+        <PropertyRef Name="id_instituicao" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="usuario_ibfk_1">
+    <End Role="instituicao" Type="Self.instituicao" Multiplicity="1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="instituicao">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="id_instituicao" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="faculdadeEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="auditoria_operacao" EntityType="Self.auditoria_operacao" />
+    <EntitySet Name="curso" EntityType="Self.curso" />
+    <EntitySet Name="diploma" EntityType="Self.diploma" />
+    <EntitySet Name="instituicao" EntityType="Self.instituicao" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" />
+    <AssociationSet Name="diploma_ibfk_1" Association="Self.diploma_ibfk_1">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="diploma" EntitySet="diploma" />
+    </AssociationSet>
+    <AssociationSet Name="diploma_ibfk_2" Association="Self.diploma_ibfk_2">
+      <End Role="instituicao" EntitySet="instituicao" />
+      <End Role="diploma" EntitySet="diploma" />
+    </AssociationSet>
+    <AssociationSet Name="usuario_ibfk_1" Association="Self.usuario_ibfk_1">
+      <End Role="instituicao" EntitySet="instituicao" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
