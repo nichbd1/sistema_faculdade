@@ -28,9 +28,14 @@ namespace Faculdade
           {
             gridInstituicoesParceiras.Columns[8].ReadOnly = true;
           }
+          else if (funcao == FaculdadeUtils.Funcao.Diretor)
+          {
+            gridInstituicoesParceiras.AllowUserToAddRows = false;
+            gridInstituicoesParceiras.Columns[8].ReadOnly = true;
+          }
           else 
           {
-            gridInstituicoesParceiras.AllowUserToDeleteRows = false;
+            gridInstituicoesParceiras.AllowUserToAddRows = false;
             gridInstituicoesParceiras.AllowUserToDeleteRows = false;
             gridInstituicoesParceiras.Columns[0].ReadOnly = true;
             gridInstituicoesParceiras.Columns[1].ReadOnly = true;
@@ -40,7 +45,7 @@ namespace Faculdade
             gridInstituicoesParceiras.Columns[5].ReadOnly = true;
             gridInstituicoesParceiras.Columns[6].ReadOnly = true;
             gridInstituicoesParceiras.Columns[7].ReadOnly = true;
-            if (funcao != FaculdadeUtils.Funcao.Superintendente)
+            if (funcao != FaculdadeUtils.Funcao.Superintendente && !Convert.ToBoolean(LoginSession.instituicao["principal"]))
               gridInstituicoesParceiras.Columns[8].ReadOnly = true;
           }
         }
