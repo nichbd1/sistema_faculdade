@@ -77,3 +77,4 @@ use faculdade;
 INSERT IGNORE INTO instituicao
 VALUES('1','instituicao','instituicao','endereco','uf','2021', 'instituicao', '1', '1');
 INSERT IGNORE INTO usuario 
+VALUES('1','admin','admin','admin','00000000000','99999999999','admin@admin.com.br','admin','S','1','1',null);
