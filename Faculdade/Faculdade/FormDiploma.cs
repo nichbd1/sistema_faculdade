@@ -43,6 +43,13 @@ namespace Faculdade
         AuditoriaOperacaoDAO.UpdateAuditoria((DataTable)gridDiplomas.DataSource, dataSourceAntigo, "cpf_aluno", 7);
         MessageBox.Show("Alterações realizadas com sucesso.");
       }
-    }  
+    }
+    private void FormDiploma_Load(object sender, EventArgs e)
+    {
+      // TODO: esta linha de código carrega dados na tabela 'faculdadeDataSet.instituicao'. Você pode movê-la ou removê-la conforme necessário.
+      this.instituicaoTableAdapter.Fill(this.faculdadeDataSet.instituicao);
+      // TODO: esta linha de código carrega dados na tabela 'faculdadeDataSet.diploma'. Você pode movê-la ou removê-la conforme necessário.
+      this.diplomaTableAdapter.Fill(this.faculdadeDataSet.diploma)
+    }
   }
 }
