@@ -35,7 +35,9 @@ namespace Faculdade
     }
     private void GridInstituicoesValidadoras_UserAddedRow(object sender, DataGridViewRowEventArgs e)
     {
-      gridInstituicoesValidadoras.Rows[e.Row.Index - 1].Cells[0].Value = InstituicaoDAO.GeraId() + addedrows;    
+      gridInstituicoesValidadoras.Rows[e.Row.Index - 1].Cells[0].Value = InstituicaoDAO.GeraId() + addedrows;
+      gridInstituicoesValidadoras.Rows[e.Row.Index - 1].Cells[7].Value = true;
+      gridInstituicoesValidadoras.Rows[e.Row.Index - 1].Cells[8].Value = true;
       addedrows++;
     }
 
