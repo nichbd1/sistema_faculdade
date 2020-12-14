@@ -13,14 +13,18 @@ namespace Faculdade
   public partial class FormPrincipal : Form
   {
     public FaculdadeUtils.Funcao funcao;
-  
+
     public FormPrincipal()
     {
       InitializeComponent();
       this.funcao = (FaculdadeUtils.Funcao)Convert.ToChar(LoginSession.usuario["funcao"]);
-      if(funcao == FaculdadeUtils.Funcao.Funcionario)
+      if (funcao == FaculdadeUtils.Funcao.Funcionario)
       {
-        buttonAuditoria.Visible = false;
+        buttonAuditoria.Enabled = false;
+      }
+      if (!(funcao == FaculdadeUtils.Funcao.Diretor || funcao == FaculdadeUtils.Funcao.Superintendente))
+      {
+        buttonUsuario.Enabled = false;
       }
     }
 

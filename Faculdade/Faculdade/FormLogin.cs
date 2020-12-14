@@ -48,9 +48,19 @@ namespace Faculdade
       //}
       else
       {
-        this.Hide();
         LoginSession.usuario = usuario;
         LoginSession.instituicao = InstituicaoDAO.GetInstituicoes($" where id={usuario["id_instituicao"]}", "*").Rows[0];
+        if(!Convert.ToBoolean(LoginSession.usuario["ativo"]))
+        {
+          MessageBox.Show("Usuário inativo. Contate o superintendente.");
+          return;
+        }
+        else if (!Convert.ToBoolean(LoginSession.instituicao["acesso_liberado"]))
+        {
+          MessageBox.Show("Sua instituição não possui o acesso liberado. Caso o problema persista, contate a instituição validadora.");
+          return;
+        }
+        this.Hide();
         FormPrincipal formPrincipal = new FormPrincipal();
         formPrincipal.ShowDialog();
       }

@@ -21,7 +21,7 @@ namespace Faculdade
       this.gridUsuarios.DataSource = usuarios;
       
       this.gridUsuarios.UserAddedRow += GridUsuarios_UserAddedRow;
-      this.gridUsuarios.CellValueChanged += GridUsuarios_CellValueChanged;
+      this.gridUsuarios.CellEndEdit += GridUsuarios_CellEndEdit;
       this.gridUsuarios.Columns[0].Visible = false;
       this.gridUsuarios.Columns[11].Visible = false;
 
@@ -44,21 +44,25 @@ namespace Faculdade
             if (funcao != FaculdadeUtils.Funcao.Superintendente)
               gridUsuarios.Columns[8].ReadOnly = true;
           }
+          else
+          {
+            gridUsuarios.Columns[8].ReadOnly = false;
+          }
         }
       }
     }
 
-    private void GridUsuarios_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+    private void GridUsuarios_CellEndEdit(object sender, DataGridViewCellEventArgs e)
     {
-      //if (e.ColumnIndex == 1)
-      //{
-      //  DataTable usuario = UsuarioDAO.GetUsuarios();
-      //  usuario.PrimaryKey = new DataColumn[] { usuario.Columns["id"] };
-      //  if (usuario.Rows.Find(gridUsuarios.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) != null)
-      //  {
-      //    MessageBox.Show("Já existe um usuário com esse login.");
-      //  }
-      //}
+      if (e.ColumnIndex == 1)
+      {
+        DataTable usuario = UsuarioDAO.GetUsuarios("*", $" where login = '{gridUsuarios.Rows[e.RowIndex].Cells[e.ColumnIndex].Value}'");        
+        if (usuario.Rows.Count > 0)
+        {
+          MessageBox.Show("Já existe um usuário com esse login.");
+          gridUsuarios.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
+        }
+      }
     }
 
     private void GridUsuarios_UserAddedRow(object sender, DataGridViewRowEventArgs e)

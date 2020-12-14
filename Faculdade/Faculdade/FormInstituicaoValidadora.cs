@@ -36,7 +36,7 @@ namespace Faculdade
         gridInstituicoesValidadoras.AllowUserToAddRows = false;
       }
       if (!alterar.Contains((FaculdadeUtils.Funcao)Convert.ToChar(LoginSession.usuario["funcao"])))
-          gridInstituicoesValidadoras.ReadOnly = false;
+          gridInstituicoesValidadoras.ReadOnly = true;
     }
     private void GridInstituicoesValidadoras_UserAddedRow(object sender, DataGridViewRowEventArgs e)
     {

@@ -67,8 +67,14 @@ foreign key (id_usuario_validacao) references usuario (id),
 foreign key (id_instituicao) references instituicao (id)
 );
 
+ALTER TABLE instituicao
+ALTER acesso_liberado SET DEFAULT false; 
+
+ALTER TABLE usuario
+ALTER ativo SET DEFAULT false; 
+
 use faculdade;
 INSERT IGNORE INTO instituicao
-VALUES('1','UFBA','Ondina','Salvador','BA','2021', 'UFBA', '1', '1');
+VALUES('1','instituicao','instituicao','endereco','uf','2021', 'instituicao', '1', '1');
 INSERT IGNORE INTO usuario 
 VALUES('1','admin','admin','admin','00000000000','99999999999','admin@admin.com.br','admin','S','1','1',null);
