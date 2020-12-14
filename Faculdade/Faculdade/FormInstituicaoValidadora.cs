@@ -25,13 +25,18 @@ namespace Faculdade
       this.gridInstituicoesValidadoras.DataSource = instituicoes;
       gridInstituicoesValidadoras.Columns[8].Visible = false;
 
-      if (funcao != FaculdadeUtils.Funcao.Superintendente)
+      List<FaculdadeUtils.Funcao> inserirExcluir = new List<FaculdadeUtils.Funcao>();
+      inserirExcluir.Add(FaculdadeUtils.Funcao.Superintendente);
+      List<FaculdadeUtils.Funcao> alterar = new List<FaculdadeUtils.Funcao>();
+      alterar.Add(FaculdadeUtils.Funcao.Superintendente);
+
+      if (!inserirExcluir.Contains((FaculdadeUtils.Funcao)Convert.ToChar(LoginSession.usuario["funcao"])))
       {
         gridInstituicoesValidadoras.AllowUserToDeleteRows = false;
         gridInstituicoesValidadoras.AllowUserToAddRows = false;
-        if (funcao != FaculdadeUtils.Funcao.Diretor)
-          gridInstituicoesValidadoras.ReadOnly = true;
       }
+      if (!alterar.Contains((FaculdadeUtils.Funcao)Convert.ToChar(LoginSession.usuario["funcao"])))
+          gridInstituicoesValidadoras.ReadOnly = false;
     }
     private void GridInstituicoesValidadoras_UserAddedRow(object sender, DataGridViewRowEventArgs e)
     {

@@ -50,6 +50,7 @@ namespace Faculdade
       {
         this.Hide();
         LoginSession.usuario = usuario;
+        LoginSession.instituicao = InstituicaoDAO.GetInstituicoes($" where id={usuario["id_instituicao"]}", "*").Rows[0];
         FormPrincipal formPrincipal = new FormPrincipal();
         formPrincipal.ShowDialog();
       }

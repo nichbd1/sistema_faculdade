@@ -15,39 +15,56 @@ namespace Faculdade
 
       this.funcao = (FaculdadeUtils.Funcao)Convert.ToChar(LoginSession.usuario["funcao"]);
      
-      DataTable usuarios = UsuarioDAO.GetUsuarios();
+      DataTable usuarios = UsuarioDAO.GetUsuarios("*", $"where id_instituicao = {LoginSession.usuario["id_instituicao"]}");
       usuarios.TableName = "usuario";
 
       this.gridUsuarios.DataSource = usuarios;
       
       this.gridUsuarios.UserAddedRow += GridUsuarios_UserAddedRow;
+      this.gridUsuarios.CellValueChanged += GridUsuarios_CellValueChanged;
       this.gridUsuarios.Columns[0].Visible = false;
-      this.gridUsuarios.Columns[11].Visible = false;           
+      this.gridUsuarios.Columns[11].Visible = false;
 
-      if (usuarios.Rows.Count > 0)
+      if (Convert.ToBoolean(LoginSession.instituicao["principal"]))
       {
-        if (funcao != FaculdadeUtils.Funcao.Diretor)
+        if (usuarios.Rows.Count > 0)
         {
-          gridUsuarios.AllowUserToDeleteRows = false;
-          gridUsuarios.Columns[0].ReadOnly = true;
-          gridUsuarios.Columns[1].ReadOnly = true;
-          gridUsuarios.Columns[2].ReadOnly = true;
-          gridUsuarios.Columns[3].ReadOnly = true;
-          gridUsuarios.Columns[4].ReadOnly = true;
-          gridUsuarios.Columns[5].ReadOnly = true;
-          gridUsuarios.Columns[6].ReadOnly = true;
-          gridUsuarios.Columns[7].ReadOnly = true;
-          gridUsuarios.Columns[9].ReadOnly = true;
-          if (funcao != FaculdadeUtils.Funcao.Superintendente)
-            gridUsuarios.Columns[8].ReadOnly = true;
+          if (funcao != FaculdadeUtils.Funcao.Diretor)
+          {
+            gridUsuarios.AllowUserToDeleteRows = false;
+            gridUsuarios.Columns[0].ReadOnly = true;
+            gridUsuarios.Columns[1].ReadOnly = true;
+            gridUsuarios.Columns[2].ReadOnly = true;
+            gridUsuarios.Columns[3].ReadOnly = true;
+            gridUsuarios.Columns[4].ReadOnly = true;
+            gridUsuarios.Columns[5].ReadOnly = true;
+            gridUsuarios.Columns[6].ReadOnly = true;
+            gridUsuarios.Columns[7].ReadOnly = true;
+            gridUsuarios.Columns[9].ReadOnly = true;
+            if (funcao != FaculdadeUtils.Funcao.Superintendente)
+              gridUsuarios.Columns[8].ReadOnly = true;
+          }
         }
       }
     }
 
+    private void GridUsuarios_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+    {
+      //if (e.ColumnIndex == 1)
+      //{
+      //  DataTable usuario = UsuarioDAO.GetUsuarios();
+      //  usuario.PrimaryKey = new DataColumn[] { usuario.Columns["id"] };
+      //  if (usuario.Rows.Find(gridUsuarios.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) != null)
+      //  {
+      //    MessageBox.Show("Já existe um usuário com esse login.");
+      //  }
+      //}
+    }
+
     private void GridUsuarios_UserAddedRow(object sender, DataGridViewRowEventArgs e)
     {
-      gridUsuarios.Rows[e.Row.Index - 1].Cells[0].Value = InstituicaoDAO.GeraId() + addedrows;      
       addedrows++;
+      gridUsuarios.Rows[e.Row.Index - 1].Cells[0].Value = InstituicaoDAO.GeraId() + addedrows;      
     }
 
     private void buttonSave_Click(object sender, EventArgs e)

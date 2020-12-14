@@ -18,8 +18,10 @@ namespace Faculdade
     {
       InitializeComponent();
       this.funcao = (FaculdadeUtils.Funcao)Convert.ToChar(LoginSession.usuario["funcao"]);
-      if (funcao != FaculdadeUtils.Funcao.Diretor && funcao != FaculdadeUtils.Funcao.Superintendente)
-        buttonInstituicaoValidadora.Visible = false;
+      if(funcao == FaculdadeUtils.Funcao.Funcionario)
+      {
+        buttonAuditoria.Visible = false;
+      }
     }
 
     private void buttonInstituicaoValidadora_Click(object sender, EventArgs e)

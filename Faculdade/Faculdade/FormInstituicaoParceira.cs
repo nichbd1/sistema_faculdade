@@ -31,6 +31,7 @@ namespace Faculdade
           else 
           {
             gridInstituicoesParceiras.AllowUserToDeleteRows = false;
+            gridInstituicoesParceiras.AllowUserToDeleteRows = false;
             gridInstituicoesParceiras.Columns[0].ReadOnly = true;
             gridInstituicoesParceiras.Columns[1].ReadOnly = true;
             gridInstituicoesParceiras.Columns[2].ReadOnly = true;
