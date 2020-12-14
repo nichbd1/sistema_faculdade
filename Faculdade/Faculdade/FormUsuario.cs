@@ -22,6 +22,7 @@ namespace Faculdade
       
       this.gridUsuarios.UserAddedRow += GridUsuarios_UserAddedRow;
       this.gridUsuarios.CellEndEdit += GridUsuarios_CellEndEdit;
+      this.gridUsuarios.UserDeletingRow += GridUsuarios_UserDeletingRow;
       this.gridUsuarios.Columns[0].Visible = false;
       this.gridUsuarios.Columns[11].Visible = false;
 
@@ -49,6 +50,23 @@ namespace Faculdade
             gridUsuarios.Columns[8].ReadOnly = false;
           }
         }
+      }
+    }
+
+    private void GridUsuarios_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+    {
+      FaculdadeUtils.Funcao funcaoDeleted = (FaculdadeUtils.Funcao)Convert.ToChar(e.Row.Cells[8].Value);
+      if (funcao == FaculdadeUtils.Funcao.Diretor && (funcaoDeleted == FaculdadeUtils.Funcao.Dirigente || funcaoDeleted == FaculdadeUtils.Funcao.Superintendente || funcaoDeleted == FaculdadeUtils.Funcao.Funcionario))
+      {
+        MessageBox.Show("Você não tem permissão para excluir esse usuário.");
+        e.Cancel = true;
+        return; 
+      }
+      if (funcao == FaculdadeUtils.Funcao.Superintendente && (funcaoDeleted == FaculdadeUtils.Funcao.Dirigente || funcaoDeleted == FaculdadeUtils.Funcao.Diretor || funcaoDeleted == FaculdadeUtils.Funcao.Funcionario || funcaoDeleted == FaculdadeUtils.Funcao.Coordenador))
+      {
+        MessageBox.Show("Você não tem permissão para excluir esse usuário.");
+        e.Cancel = true;
+        return;
       }
     }
 
